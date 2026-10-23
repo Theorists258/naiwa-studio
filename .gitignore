@@ -1,0 +1,15 @@
+node_modules/
+dist/
+*.log
+.DS_Store
+Thumbs.db
+coverage/
+.env
+.env.*
+!.env.example
+
+# Local design references, browser checks and agent notes
+qa/
+AGENTS.md
+design-qa.md
+public/assets/naiwa-laugh.gif
