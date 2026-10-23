@@ -21,6 +21,15 @@ pnpm test:sites
 
 `test:sites` 包含构建产物检查，必须在构建后运行。
 
+修改 Windows 启动器或打包逻辑时，在 Windows 上继续运行：
+
+```bash
+pnpm package:windows
+pnpm test:portable
+```
+
+打包命令使用系统的 .NET Framework C# 编译器，生成 `release/` 下的 ZIP 和 `.zip.sha256` 文件；便携测试针对打包时编译的启动器运行。开发打包需要 Node.js 和 pnpm，便携版用户不需要安装它们。CI 也会执行 Windows 打包与便携测试，并上传 ZIP 和校验文件作为工作流产物。
+
 PR 描述请说明解决的问题、用户可见的变化和验证方式。界面改动附截图；音频改动说明使用的采样、裁切和音高条件。测试应覆盖有意义的行为，例如播放时序、尾音、工程校验或保存恢复。
 
 ## 修改约定

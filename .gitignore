@@ -4,6 +4,7 @@ dist/
 .DS_Store
 Thumbs.db
 coverage/
+release/
 .env
 .env.*
 !.env.example

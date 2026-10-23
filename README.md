@@ -15,7 +15,20 @@
 
 内置大笑、呼啦干巴爹、嘎脚塞、嘎嘎地拉水和嘟噗 5 款音源，也可以导入自己的声音。音频解码、播放和导出都在浏览器内完成，无需后端音频服务。
 
-## 快速启动
+## Windows 一键运行
+
+[下载 Windows 一键运行版](https://github.com/Theorists258/naiwa-studio/releases/latest)，选择 Release 中的 `Naiwa-Studio-v0.1.0-windows-x64.zip` 附件。
+
+便携包 `Naiwa-Studio-v0.1.0-windows-x64.zip` 适用于 Windows 10 / 11 x64，无需安装 Node.js 或 Python。
+
+1. 将压缩包**完整解压**到一个文件夹。
+2. 双击 `奶蛙Studio.exe`，浏览器会自动打开编曲界面。
+3. 使用时保留小控制窗；关闭浏览器后，可通过控制窗再次打开。
+4. 退出前点击网页中的“保存”备份工程，再点击控制窗的退出按钮或关闭控制窗。
+
+解压后的便携版可日常离线使用，导入音频、保存工程和导出 WAV 与网页版一致。请保留 EXE 旁的 `www` 文件夹，并在解压后运行。详细操作、备份和故障处理见 [Windows 便携版说明](docs/PORTABLE-WINDOWS.md)。
+
+## 从源码启动
 
 环境：**Node.js 24.12+（24 LTS）**、**pnpm 11.25.0**。包管理器版本记录在 `package.json` 中。
 
@@ -73,11 +86,23 @@ pnpm test:sites
 
 构建后的前端在 `dist/client/`，使用 `pnpm preview` 可以本地预览。构建脚本还会准备托管适配文件 `dist/server/index.js` 和 `dist/.openai/hosting.json`；构建本身不会执行发布。
 
+Windows 开发者可以进一步构建并检查便携版：
+
+```bash
+pnpm package:windows
+pnpm test:portable
+```
+
+`package:windows` 会先构建前端，再使用系统自带的 .NET Framework C# 编译器生成启动器，输出 `release/Naiwa-Studio-v0.1.0-windows-x64.zip` 及对应的 `.zip.sha256` 校验文件。`test:portable` 验证已编译的启动器，因此在打包后运行。开发打包需要 Node.js 与 pnpm，使用生成的便携版不需要它们。
+
+[CI](.github/workflows/ci.yml) 包含 Windows 打包与便携启动器测试，并将 ZIP 和 SHA-256 校验文件保存为工作流产物。
+
 | 路径 | 用途 |
 | --- | --- |
 | [src/App.jsx](src/App.jsx) | 两种视图、录制、导入和工程保存 |
 | [src/music.js](src/music.js) | 默认乐段、音源表、键位和工程校验 |
 | [src/audio-engine.js](src/audio-engine.js) | 音频解码、采样变调、播放调度和 WAV 渲染 |
+| [desktop/NaiwaLauncher.cs](desktop/NaiwaLauncher.cs) | Windows 便携版启动器 |
 | [tests](tests) | 音频引擎、工程数据与托管适配测试 |
 | [public/audio](public/audio) | 内置 MP3 音源 |
 | [public/assets](public/assets) | 界面角色图片 |

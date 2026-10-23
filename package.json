@@ -9,7 +9,9 @@
     "build": "vite build && node scripts/prepare-sites-build.mjs",
     "preview": "vite preview",
     "test:sites": "node --test tests/sites-worker.test.mjs",
-    "test": "node --test tests/audio-engine.test.mjs"
+    "test": "node --test tests/audio-engine.test.mjs",
+    "package:windows": "pnpm build && node scripts/package-windows.mjs",
+    "test:portable": "node --test tests/portable-server.test.mjs"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",

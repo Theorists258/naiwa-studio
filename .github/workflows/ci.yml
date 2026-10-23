@@ -32,3 +32,30 @@ jobs:
         run: pnpm build
       - name: Test hosting adapter
         run: pnpm test:sites
+
+  windows-portable:
+    runs-on: windows-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          package-manager-cache: false
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 11.25.0
+          run_install: false
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm package:windows
+      - run: pnpm test:portable
+      - uses: actions/upload-artifact@v7
+        with:
+          name: Naiwa-Studio-windows-x64
+          path: |
+            release/*.zip
+            release/*.sha256
+          if-no-files-found: error
+          retention-days: 14
